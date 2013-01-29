@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script src="/Todo/js/app.js"></script>
+    <script src="/Todo/js/controllers/controller.js"></script>
+    <script src="/Todo/js/directives/todoFocus.js"></script>
+    <script src="/Todo/js/directives/todoBlur.js"></script>
+    <link rel="stylesheet" href="/Todo/css/base.css" type="text/css" />
+    <style>[ng-cloak] {display: none}</style>
+    <title>Todo</title>
+  </head>
+  <body>
+    <section id="todoapp" ng-controller="TodoCtrl" class="span11 offset1">
+    
+      <header id="header">
+        <h1>Todos</h1>
+        <form id="todo-form" ng-submit="addTodo()">
+          <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus>
+        </form>
+      </header>
+  
+      <section id="main" ng-show="todos.length" ng-cloak>
+        <ul id="todo-list">
+          <li ng-repeat="todo in todos" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+            <div class="view">
+              <input class="toggle" type="checkbox" ng-model="todo.done">
+              <label ng-dblclick="editTodo(todo)">{{todo.description}}</label>
+              <button class="destroy" ng-click="removeTodo(todo)"></button>
+            </div>
+            <form ng-submit="doneEditing(todo)">
+              <input class="edit" ng-model="todo.description" todo-blur="doneEditing(todo)" todo-focus="todo == editedTodo">
+            </form>
+          </li>
+        </ul>
+      </section>
+    
+    </section>
+  
+  </body>
+</html>
